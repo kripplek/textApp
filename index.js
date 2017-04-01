@@ -1,35 +1,37 @@
 // lol
 // y tho.jpg
 
-var express = require('express'),
-    app = express(),
-    cors = require('cors'),
-    messager = require('./lib/messages.js'),
-    twilio = require('twilio'),
-    accountSid = "AC44e673d1495566699e5fc45fde5359f9",
-    authToken = "c03e1c09427ca8fd7f731b63895fabcb",
-    client = new twilio.RestClient(accountSid, authToken);
+ var express = require('express'),
+     app = express(),
+     count = 0,
+     messages = require('./messages.js'),
+     config = require('./config.js'),
+     texting = require('./texting.js'),
+     async = require('async');
 
-app.get('/', function (req, res) {
-    res.send('<form action="/lol"><button type="submit"> Cat facts!!!</button></form>');
-})
 
-app.post('/lol', function (req,res){
 
-exports.send= function(to,msg, cb){
-    client.messages.create({
-        body: msg,
-        to: to,  // Text this number
-        from: config.twilio.fromNumber  // From a valid Twilio number
-    }, function(err, message) {
-        if(err) {
-            return cb(err,message);
-        }
-        return cb(null,message);
-    });
-}
-     
-    res.location('/');
-}
-//handle other routes outside of main
-app.listen(4545);
+ app.get('/', function (req, res) {
+	 var txt =  '<form action="/fact" method="post"><button type="submit"> Send cat fact</button></form> '
+	     txt += '<form action="/swanson" method="post"><button type="submit"> Send swanson quote</button></form> '
+	     txt += '<br> '+ count+ ' texts sent to '+ config.victim.name
+     res.send(txt);
+ })
+app.post('/fact', function(req,res){
+	messages.getCatFact(function(data){
+		texting.sendMessage(config.victim.number, data);
+		count++;
+		res.redirect('/');
+	});
+});
+
+app.post('/swanson', function(req,res){
+	messages.getSwansonQuote(function(data){
+		texting.sendMessage(config.victim.number,data );
+		count++;
+		res.redirect('/');
+
+	});
+});
+ //handle other routes outside of main
+ app.listen('4545');
