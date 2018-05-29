@@ -34,4 +34,4 @@ app.post('/swanson', function(req,res){
 	});
 });
  //handle other routes outside of main
- app.listen('4545');
+ app.listen(config.http_port);

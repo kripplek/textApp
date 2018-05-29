@@ -1,0 +1,9 @@
+{
+  "apps" : [{
+    "name"        : "textApp",
+    "script"      : "./index.js",
+    "env": {
+      "NODE_ENV": "development"
+    }
+  }]
+}
