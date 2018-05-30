@@ -1,10 +1,16 @@
 #Texting app
 sends catfacts and swanson quotes to a specified number
 
+## annoying friends
+sends catfacts and swanson quotes to pre configured people 
+
+### Requirements:
+You need a twilio account ( with money) ... shit aint free yo!
+
 ## Install
 - clone
 - `cp config.sample.yml config.yml`
-- fill in your actual data
+- fill in your actual account info
 - `npm install`
 - `node index.js`
 
